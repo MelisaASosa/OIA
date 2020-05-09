@@ -22,25 +22,11 @@ public class VendedorasPremiadas {
 				//El primer registro de cada vendedora va a tener la cantidad de ventas
 				int cantidadVentas = entrada.get(proximoIndice);
 				if(cantidadVentas >= cantidadVentasConsecutivas) {
-					/*
-					int to = cantidad + 1;
-					int from = to + entrada.get(to);
-					importesMaximos[i-1] = calcularMaximoImporteParaVendedoraNVentas(cantidadVentasConsecutivas, entrada.subList(to, from));*/
 					int sumaImporte = 0;
-					int j;
-					for(j = proximoIndice+1; j <= proximoIndice+entrada.get(proximoIndice); j++) {
-						int sumaParcial = 0;
-						for(int k = j; k < cantidadVentasConsecutivas + j; k++) {
-							sumaParcial += entrada.get(k);
-						}
-						
-						if(sumaParcial > sumaImporte) {
-							sumaImporte = sumaParcial;
-						}
-												
-						
+					for(int k = proximoIndice+1; k < cantidadVentasConsecutivas + proximoIndice+1; k++) {
+						sumaImporte += entrada.get(k);
 					}
-					//proximoIndice = j;
+						
 					importesMaximos.add(sumaImporte);
 				} else {
 					if(importesMaximos.size() > 0) {
@@ -51,7 +37,6 @@ public class VendedorasPremiadas {
 				}
 				
 				proximoIndice += cantidadVentas+1;
-				//proximoIndice += entrada.get(proximoIndice) + 1;
 			}
 
 			empatadas = vendedorasEmpatadas(importesMaximos);
