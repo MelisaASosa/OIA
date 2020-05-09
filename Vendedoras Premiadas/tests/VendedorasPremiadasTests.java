@@ -1,5 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+
 import org.junit.Assert;
 
 public class VendedorasPremiadasTests {
@@ -18,11 +21,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(3, resultados[0]);
-		Assert.assertEquals(2, resultados[1]);
-		Assert.assertEquals(74, resultados[2]);
+		Assert.assertEquals((Integer)3, resultados.get(0));
+		Assert.assertEquals((Integer)2, resultados.get(1));
+		Assert.assertEquals((Integer)74, resultados.get(2));
 	}
 
 	@Test
@@ -32,9 +35,9 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		String resultado = FileUtils.readErrorFile(pathOut);
 		
-		Assert.assertEquals("No hay ganadoras", resultados[0]);
+		Assert.assertEquals("No hay ganadoras", resultado);
 	}
 
 	@Test
@@ -44,11 +47,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(2, resultados[0]);
-		Assert.assertEquals(3, resultados[1]);
-		Assert.assertEquals(94, resultados[2]);
+		Assert.assertEquals((Integer)2, resultados.get(0));
+		Assert.assertEquals((Integer)3, resultados.get(1));
+		Assert.assertEquals((Integer)94, resultados.get(2));
 	}
 	
 	@Test
@@ -58,11 +61,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(3, resultados[0]);
-		Assert.assertEquals(2, resultados[1]);
-		Assert.assertEquals(74, resultados[2]);
+		Assert.assertEquals((Integer)3, resultados.get(0));
+		Assert.assertEquals((Integer)2, resultados.get(1));
+		Assert.assertEquals((Integer)74, resultados.get(2));
 	}
 	
 	@Test
@@ -72,11 +75,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(2, resultados[0]);
-		Assert.assertEquals(2, resultados[1]);
-		Assert.assertEquals(56, resultados[2]);
+		Assert.assertEquals((Integer)2, resultados.get(0));
+		Assert.assertEquals((Integer)2, resultados.get(1));
+		Assert.assertEquals((Integer)56, resultados.get(2));
 	}
 
 	@Test
@@ -86,9 +89,9 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		String resultado = FileUtils.readErrorFile(pathOut);
 		
-		Assert.assertEquals("No se puede desempatar", resultados[0]);
+		Assert.assertEquals("No se puede desempatar", resultado);
 	}
 
 	@Test
@@ -98,11 +101,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(3, resultados[0]);
-		Assert.assertEquals(4, resultados[1]);
-		Assert.assertEquals(46, resultados[2]);
+		Assert.assertEquals((Integer)3, resultados.get(0));
+		Assert.assertEquals((Integer)4, resultados.get(1));
+		Assert.assertEquals((Integer)46, resultados.get(2));
 	}
 
 	@Test
@@ -112,10 +115,11 @@ public class VendedorasPremiadasTests {
 		
 		vendedorasPremiadas.calcular(pathIn, pathOut);
 		
-		int[] resultados = FileUtils.fileToArrayInt(pathOut);
+		List<Integer> resultados = FileUtils.fileToArrayInt(pathOut);
 		
-		Assert.assertEquals(2, resultados[0]);
-		Assert.assertEquals(4, resultados[1]);
-		Assert.assertEquals(50, resultados[2]);
+		Assert.assertEquals((Integer)2, resultados.get(0));
+		Assert.assertEquals((Integer)4, resultados.get(1));
+		Assert.assertEquals((Integer)50, resultados.get(2));
 	}
+	
 }
