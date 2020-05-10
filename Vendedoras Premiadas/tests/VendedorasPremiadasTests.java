@@ -51,7 +51,7 @@ public class VendedorasPremiadasTests {
 		
 		Assert.assertEquals((Integer)2, resultados.get(0));
 		Assert.assertEquals((Integer)3, resultados.get(1));
-		Assert.assertEquals((Integer)94, resultados.get(2));
+		Assert.assertEquals((Integer)92, resultados.get(2));
 	}
 	
 	@Test

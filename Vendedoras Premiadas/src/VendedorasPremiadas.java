@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class VendedorasPremiadas {
@@ -13,38 +11,45 @@ public class VendedorasPremiadas {
 		
 		List<Integer> importesMaximos = new ArrayList<>();
 		boolean empatadas = true;
+		boolean huboDesempate = false;
 		
 		while(empatadas) {
-			importesMaximos.clear();
 			int proximoIndice = 1;
+			int cantidadVendedorasNoLlegan = 0;
 			
 			for(int i = 0; i < cantidadVendedoras; i++) {
 				//El primer registro de cada vendedora va a tener la cantidad de ventas
 				int cantidadVentas = entrada.get(proximoIndice);
+				int sumaImporte = 0;
 				if(cantidadVentas >= cantidadVentasConsecutivas) {
-					int sumaImporte = 0;
-					for(int k = proximoIndice+1; k < cantidadVentasConsecutivas + proximoIndice+1; k++) {
-						sumaImporte += entrada.get(k);
-					}
-						
-					importesMaximos.add(sumaImporte);
+					
+					List<Integer> importesVendedora = entrada.subList(proximoIndice + 1, 1 + proximoIndice + entrada.get(proximoIndice));
+
+					sumaImporte = calcularSumaImporteMaximo(importesVendedora, cantidadVentasConsecutivas);
 				} else {
-					if(importesMaximos.size() > 0) {
+					cantidadVendedorasNoLlegan++;
+					
+					if(cantidadVendedorasNoLlegan == cantidadVendedoras && huboDesempate) {
 						String resultado = "No se puede desempatar";
 						FileUtils.saveErrorToFile(resultado, pathOut);
 						return;
 					}
 				}
 				
+				importesMaximos.add(sumaImporte);
 				proximoIndice += cantidadVentas+1;
 			}
 
 			empatadas = vendedorasEmpatadas(importesMaximos);
+			if(empatadas) {
+				importesMaximos.clear();
+				huboDesempate = true;
+			}
 			cantidadVentasConsecutivas++;
 		}
 		
-		if(importesMaximos.size() > 0) {
-			int importeMaximo = obtenerMaximo(importesMaximos);
+		int importeMaximo = obtenerMaximo(importesMaximos);
+		if(importesMaximos.size() > 0 && importeMaximo != 0) {
 			int[] resultados = {importesMaximos.indexOf(importeMaximo) + 1, cantidadVentasConsecutivas - 1, importeMaximo};
 			
 			FileUtils.saveResultToFile(resultados, pathOut);
@@ -54,6 +59,30 @@ public class VendedorasPremiadas {
 		}
 	}
 	
+	private int calcularSumaImporteMaximo(List<Integer> importesVendedora, int n) {
+		int cont = 0;
+		int sum = 0;
+		int maximo = 0;
+		
+		for(int i = 0; i < importesVendedora.size(); i++) {
+			for(int j = i; j < i + n; j++) {
+				if(j < importesVendedora.size() ) {
+					sum += importesVendedora.get(j);
+					cont++;
+				}
+			}
+			
+
+			if(sum > maximo && cont == n) {
+				maximo = sum;
+			}
+			sum = 0;
+			cont = 0;
+		}
+		
+		return maximo;
+	}
+
 	private int obtenerMaximo(List<Integer> importesMaximos) {
 		int max = 0;
 		
@@ -71,37 +100,19 @@ public class VendedorasPremiadas {
 	 * @return
 	 */
 	private boolean vendedorasEmpatadas(List<Integer> importesMaximos) {
-		boolean empatadas = false;
-		int importe = 0;
+		if(importesMaximos.size() == 0) {
+			return false;
+		}
 		
-		for(int i = 0; i < importesMaximos.size(); i++) {
-			empatadas &= ((importe == importesMaximos.get(i)) && importe != 0);
+		boolean empatadas = false;
+		int importe = importesMaximos.get(0);
+		
+		for(int i = 1; i < importesMaximos.size(); i++) {
+			empatadas = empatadas || ((importe == importesMaximos.get(i)) && importe != 0);
 			importe = importesMaximos.get(i);
 		}
 		
 		return empatadas;
 	}	
-	
-	/**
-	 * Esta funcion solo tiene los importes de una vendedora y calcula los maximos consecutivos entre esos
-	 * @param cantidad de ventas consecutivas a evaluar
-	 * @param todos los importes de la vendedora
-	 * @return
-	 */
-	/*private int calcularMaximoImporteParaVendedoraNVentas(int n, List<Integer> importesVendedora) {
-		int sumaImporte = 0;
-		for(int j = 0; j < importesVendedora.size(); j++) {
-			int sumaParcial = 0;
-			for(int k = j; k < n; k++) {
-				sumaParcial += importesVendedora.get(k);
-			}
-			
-			if(sumaParcial > sumaImporte) {
-				sumaImporte = sumaParcial;
-			}
-		}
-		
-		return sumaImporte;
-	}*/
 
 }
